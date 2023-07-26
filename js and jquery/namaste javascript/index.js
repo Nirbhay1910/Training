@@ -184,4 +184,51 @@ function xo3() {
     close(i); //it prints 1,2,3,4,5 as everytime i is passed into function it goes into new location of x
   }
 }
-xo3();
+// xo3();
+
+function Counter(){
+  let count = 0;
+  this.increment = ()=>{
+    count++;
+    console.log(count);
+  }
+  this.decrement = ()=>{
+    count--;
+    console.log(count);
+  }
+}
+
+let counter1 = new Counter();
+counter1.increment();
+counter1.increment();
+counter1.increment();
+counter1.increment();
+counter1.decrement();
+
+
+/// first class functions means ability of functions to be used as values
+
+
+///////// Callback functions ///////
+setTimeout(function(){
+  console.log("timer");
+},5000);
+function gh(tu){
+  console.log("gh");
+  tu();
+}
+gh(function tu(){
+  console.log('tu');
+})
+//When one function is passed as an argument to another function and generally called at the end of the function
+function attachEventListener(){
+  let count = 0;
+  document.getElementById("clickMe").addEventListener('click',function xyz(){
+    console.log('button clicked', ++count);
+ })
+}
+attachEventListener();
+/// setTimeout, DOM API, fetch , local storage, console, location are all parts of web APIs which are part of browser not js
+/// when setTimeout is called it puts callback fn (cb) in browser and wait till timer expires after that cb is pushed into call back queue,
+/// A event loop is present whose work is to constantly monitor both call stack and callback queue if call stack is empty. It will schedule cb from callbak queue to call stack
+/// when fetch is called it creates promise and its call back function goes into microtask queue which has more priority then callback queue.
