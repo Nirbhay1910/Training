@@ -232,3 +232,129 @@ attachEventListener();
 /// when setTimeout is called it puts callback fn (cb) in browser and wait till timer expires after that cb is pushed into call back queue,
 /// A event loop is present whose work is to constantly monitor both call stack and callback queue if call stack is empty. It will schedule cb from callbak queue to call stack
 /// when fetch is called it creates promise and its call back function goes into microtask queue which has more priority then callback queue.
+
+
+
+
+///js uses just in time compilation
+/// interpretter is fast, compiler is efficiecient
+/// originally js is made for interpretter but now it uses interpretter and compiler both
+/// code -> parsing (generates AST) -> interpretter (converts into byte code) it takes help of compiler to optimise the code in runtime -> execution (memory heap and callstack)
+/// garbage collector is used to free space in memory heap wherever possible using mark and sweep algorithm
+/// v8 is fastest js engine
+
+
+/// there is trust issue in set timeout as only when call stack is empty event loop schedules callback fn to execute
+/// but if there are millions of lines of code then it will take more time than timer to execute all functions in call stack. Hence there will be delay in cb execution.
+
+// console.log("start");
+// setTimeout(function cb(){
+//   console.log("callback");
+// }, 5000);
+// setTimeout(function cb(){
+//   console.log("callback 0");
+// }, 0); // even timer is 0 even then it will go through callback queue hence will execute later
+// console.log("end");
+
+// //delay of 10s
+
+// let startDate = new Date().getTime();
+// let endDate = startDate;
+// while(endDate<startDate + 10000){
+//   endDate = new Date().getTime();
+// }
+// console.log("while expires");
+
+
+
+/////////// higher order functions /////////
+
+/// use DRY principle (Don't Repeat Yourself)
+
+const radius = [3,1,2,4];
+
+const area = function (radius){
+  return  Math.PI * radius*radius;
+}
+const circumference = function (radius){
+  return  Math.PI * radius* 2;
+}
+const diameter = function (radius){
+  return  2 * radius;
+}
+
+const calculate = function (radius, logic){
+  const output = [];
+  for(let i=0;i<radius.length;i++){
+    output.push(logic(radius[i]));
+  }
+  return output;
+}
+
+console.log(calculate(radius,area));
+console.log(radius.map(area));
+const out = radius.map(area);
+console.log(out);
+console.log(radius.map((radii)=>{
+  return radii*2;
+}));
+
+//// Array prototype ////
+Array.prototype.calculate = function (logic){
+  const output = [];
+  for(let i=0;i<this.length;i++){
+    output.push(logic(this[i]));
+  }
+  return output;
+}/// Now calculate method will be available on every array
+console.log(radius.calculate(area))
+
+////////// objects and prototype /////////
+
+let arr = ["Nirbhay", "Rohit"];
+let object = {
+  name: "Nirbhay",
+  city: "Delhi",
+  getIntro: function(){
+    console.log(this.name+" from "+this.city);
+  }
+}
+// Everything in js is object
+//__proto__ or prototype contains methods which can be used
+// Array.__proto__.__proto__ is same as Object.__proto__
+// Object.__proto__.__proto__ is NULL
+
+
+
+
+////////// shallow copy vs deep copy ///////
+
+const originalObject = { a: 1, b: { c: 2 } };  
+const shallowCopy = { ...originalObject };  
+shallowCopy.a = 3; // Changes shallowCopy, but not originalObject  
+shallowCopy.b.c = 4; // Changes both shallowCopy and originalObject as nested object still points to same location
+console.log(originalObject);
+
+
+
+const originalObject2 = { a: 1, b: { c: 2 } };  
+const deepCopy = JSON.parse(JSON.stringify(originalObject2)); 
+deepCopy.a = 3; // Changes deepCopy, but not originalObject  
+deepCopy.b.c = 4; // Changes deepCopy, but not originalObject  
+console.log(originalObject2);
+
+
+/////// filter and reduce ///////
+const arr2 = [5,1,3,2,6];
+function isOdd(x){
+  return x%2===1;
+}
+const op =  arr2.filter(isOdd);
+console.log(op);
+
+
+const sumOfArray = arr2.reduce(function(acc,curr){ //takes 2 args accumulator where result is accumulated, curr is current element
+  acc=acc+curr;
+  return acc;
+})
+console.log(sumOfArray);
