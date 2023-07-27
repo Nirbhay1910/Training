@@ -115,3 +115,60 @@ function popButtonHandler() {
   };
   xhr.send();
 }
+
+//////////////// Fetch API ////////////////
+
+let p = fetch(
+  "https://api.slingacademy.com/v1/sample-data/files/employees.json"
+)
+  .then((res) => {
+    console.log(res);
+    return res.json();
+  })
+  .then((data) => {
+    console.log(data);
+  });
+// it is a 2-stage process in first then we get response status and in other we get data
+
+let options = {
+  method: "POST",
+  headers: {
+    "content-type": "application/json",
+  },
+  body: JSON.stringify({
+    title: "foo",
+    body: "bar",
+    userId: 1,
+  }),
+};
+fetch("https://jsonplaceholder.typicode.com/posts", options)
+  .then((res) => {
+    console.log(res);
+    return res.json();
+  })
+  .then((data) => {
+    console.log(data);
+  });
+/////// using async await /////
+const task = async () => {
+  let options = {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      title: "chal hatt",
+      body: "sdcs",
+      userId: 3,
+    }),
+  };
+  let todo = await fetch("https://jsonplaceholder.typicode.com/posts", options);
+  let res = await todo.json();
+  return res;
+};
+
+const mainFunc = async () => {
+  const examp = await task();
+  console.log(examp);
+};
+mainFunc();
