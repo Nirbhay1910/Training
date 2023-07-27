@@ -37,3 +37,27 @@ console.log(li.classList.contains('yo'))
 
 li.remove();
 
+///Parent Node///
+console.log(ul.parentElement);
+console.log(ul.parentNode);
+console.log(ul.parentNode.parentElement);
+
+const html = document.documentElement;
+console.log(html.parentElement); //null
+
+//// child Node ///
+console.log(ul.childNodes); /// $text is showing because of new line we have given
+console.log(ul.firstChild);
+console.log(ul.lastChild);
+
+ul.childNodes[1].style.backgroundColor = 'yellow';
+//its better to use them
+console.log(ul.children);
+console.log(ul.firstElementChild);
+console.log(ul.lastElementChild);
+
+
+///// sibling node traversal ////
+const div = document.querySelector('div');
+console.log(ul.previousElementSibling);
+console.log(ul.nextElementSibling);
