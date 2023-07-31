@@ -4,8 +4,10 @@ const rootDir = require("./util/helper");
 
 const bodyParser = require("body-parser"); //will allow us to use req.body
 const express = require("express");
-const adminData = require("./routes/admin");
+const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
+
+const errorController = require("./controllers/error");
 // const expressHbs = require("express-handlebars");
 
 const app = express();
@@ -21,13 +23,9 @@ app.use(express.static(path.join(rootDir, "public")));
 
 app.use(bodyParser.urlencoded({ extended: true })); //this middleware will automatically parse the data for us and call next() at the end
 
-app.use("/admin", adminData.router);
+app.use("/admin", adminRoutes);
 app.use(shopRoutes);
-app.use((req, res, next) => {
-  res.status(404).render("404", {
-    pageTitle: "Page Not Found",
-  });
-});
+app.use(errorController.get404page);
 app.listen(3000, () => {
   console.log("Listening to port 3000");
 });
