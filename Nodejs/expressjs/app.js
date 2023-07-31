@@ -4,14 +4,34 @@ const rootDir = require("./util/helper");
 
 const bodyParser = require("body-parser"); //will allow us to use req.body
 const express = require("express");
-const adminRoutes = require("./routes/admin");
+const adminData = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
+// const expressHbs = require("express-handlebars");
 
 const app = express();
+
+// app.engine("hbs", expressHbs()); //This will tell express that handlebars is new engine
+//Note whatever you have put in "hbs" will be used as extension for file like 404.hbs
+//We didn't need it in case of pugs as it is already defined engine in express
+app.set("view engine", "ejs");
+// app.set("view engine", "pug"); //is used to set keys, config values so that it can be used across the site
+app.set("views", "views"); //telling where our views are. by default is is views only
 
 app.use(express.static(path.join(rootDir, "public")));
 
 app.use(bodyParser.urlencoded({ extended: true })); //this middleware will automatically parse the data for us and call next() at the end
+
+app.use("/admin", adminData.router);
+app.use(shopRoutes);
+app.use((req, res, next) => {
+  res.status(404).render("404", {
+    pageTitle: "Page Not Found",
+  });
+});
+app.listen(3000, () => {
+  console.log("Listening to port 3000");
+});
+// module.exports = path.dirname(require.main.filename);
 
 ///middlewares///
 // app.use((req, res, next) => {
@@ -47,13 +67,3 @@ app.use(bodyParser.urlencoded({ extended: true })); //this middleware will autom
 //   // console.log("inside / middleware");
 //   res.send("<h1>Hello from Express</h1>");
 // });
-
-app.use("/admin", adminRoutes);
-app.use(shopRoutes);
-app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, "views", "404.html"));
-});
-app.listen(3000, () => {
-  console.log("Listening to port 3000");
-});
-// module.exports = path.dirname(require.main.filename);
