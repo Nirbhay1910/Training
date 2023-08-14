@@ -8,9 +8,8 @@
   </head>
   <body>
     <h1>Git Practice</h1>
-    <p>git status, git log, git diff</p>
     <ul>
-      <li>Git status: shows status</li>
+      <li>git status: shows status</li>
       <li>git log: gives all previous commit details</li>
       <li>
         git diff: gives diff between working directory and staged directory
@@ -41,7 +40,13 @@
         git log --pretty=format:"%h -- %an" : will give hashed commit and author
         name
       </li>
+      <li>
+        git commit --amend : With this we can change last commit's message and
+        can merge our staged changes with the last commit (After opening of
+        editor press i to type after that press esc,colon,wq and enter)
+      </li>
+      <li>git restore --staged filepath: Removes file from stage area</li>
+      <li>git checkout -- filePath : Restores the file to previous commit</li>
     </ul>
-    <h2>Training training training</h2>
   </body>
 </html>
