@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\demoController;
+use App\Http\Controllers\registrationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,13 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/demo', function(){
-    echo "Hello World!";
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/demo/{name}/{id?}', function($name, $id=null){ //id is optional
+//     // return view('demo');
+//     //echo $name;
+//     $id = "<h2>siuuuu</h2>";
+//     $data = compact('name','id'); // will create assoc array of variables
+//     return view('demo')->with($data);
+// });
 
 // Route::post('/test',function(){
 //     echo "Testing the route";
@@ -40,3 +46,7 @@ Route::get('/demo', function(){
 // Route::any('/test',function(){
 //     echo "Testing the route";
 // });
+
+Route::get('/register',[registrationController::class,'index']);
+Route::post('/register',[registrationController::class,'register']);
+Route::get('/{name}',[demoController::class,'index']);
