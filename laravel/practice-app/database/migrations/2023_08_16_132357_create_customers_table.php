@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('dob');
             $table->string('password');
             $table->boolean('status')->default(1);
-            $table->integer('points');
+            $table->integer('points')->default(0);
             $table->timestamps(); //created_at, updated_at
         });
     }

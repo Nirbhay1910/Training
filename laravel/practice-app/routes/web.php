@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\demoController;
 use App\Http\Controllers\registrationController;
+use App\Models\Customer;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,4 +50,9 @@ use App\Http\Controllers\registrationController;
 
 Route::get('/register',[registrationController::class,'index']);
 Route::post('/register',[registrationController::class,'register']);
-Route::get('/{name}',[demoController::class,'index']);
+Route::get('/',[demoController::class,'index']);
+Route::get('/customer',function(){
+    $customers = Customer::all();
+    echo "<pre>";
+    print_r($customers->toArray());
+});
