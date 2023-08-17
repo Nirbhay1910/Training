@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\demoController;
 use App\Http\Controllers\registrationController;
+use App\Http\Controllers\customerController;
 use App\Models\Customer;
 /*
 |--------------------------------------------------------------------------
@@ -51,8 +52,13 @@ use App\Models\Customer;
 Route::get('/register',[registrationController::class,'index']);
 Route::post('/register',[registrationController::class,'register']);
 Route::get('/',[demoController::class,'index']);
-Route::get('/customer',function(){
-    $customers = Customer::all();
-    echo "<pre>";
-    print_r($customers->toArray());
-});
+// Route::get('/customer',function(){
+//     $customers = Customer::all();
+//     echo "<pre>";
+//     print_r($customers->toArray());
+// });
+Route::get('/customer/create',[customerController::class,'index'])->name('customer.create');
+Route::post('/customer/create',[customerController::class,'store']);
+Route::get('/customer',[customerController::class,'view']);
+Route::get('/customer/delete/{id}',[customerController::class,'delete'])->name('customer.delete');
+Route::get('/customer/edit/{id}',[customerController::class,'edit'])->name('customer.edit');
